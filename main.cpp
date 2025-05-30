@@ -5,7 +5,11 @@
 #include <cstdlib>
 #include <windows.h>
 #include <iomanip>
+#include <thread>
+#include <vector>
 using namespace std;
+
+long long int piHits = 0;
 
 class symNumber//I dont know if symbolic number exists in c++ so I made my own
 {
@@ -188,6 +192,7 @@ bool menu();
 void throwDie();
 void pi();
 void area();
+void piSplit(long long int toToss);
 
 int main()
 {
@@ -267,33 +272,23 @@ void throwDie()
 
 void pi()
 {
-    long long int toToss;
+    piHits = 0;
+    long long int totalTosses;
     cout << "insert number of tries: ";
-    cin >> toToss;
-    cout << endl;
+    cin >> totalTosses;
+    int threads;
+    cout << "insert the number of threads to use(at your own risk):";
+    cin >> threads;
 
-    int r = 10000;
+    vector<thread> threadPool;
 
-    long long int toss = 0;
-    long long int hit = 0;
-    double x, y;
 
-    while (toss < toToss)
-    {
-        x = (double)rand() / RAND_MAX;
-        y = (double)rand() / RAND_MAX;
-        if (x * x + y * y <= 1.0)
-            hit++;
-        toss++;
-        if(!(toss%10000000))
-            cout << "tossed: " << toss << " times" <<'\n';
-    }
 
-    cout << "out of " << toToss << " tries, " << hit << " were inside the quarter of the circle" << '\n';
+    cout << "out of " << totalTosses << " tries, " << piHits << " were inside the quarter of the circle" << '\n';
     cout << fixed << setprecision(15);
-    cout << "the approximation of pi is: " << 4*(double)hit/toss << '\n';
-    cout << "the error is: " << abs(3.14159265358979323846 - 4*(double)hit/toss) << '\n';
-    cout << "the error in percent is: " << abs((3.14159265358979323846 - 4*(double)hit/toss) / 3.14159265358979323846 * 100) << "%" << '\n';
+    cout << "the approximation of pi is: " << 4*(double)piHits/totalTosses << '\n';
+    cout << "the error is: " << abs(3.14159265358979323846 - 4*(double)piHits/totalTosses) << '\n';
+    cout << "the error in percent is: " << abs((3.14159265358979323846 - 4*(double)piHits/totalTosses) / 3.14159265358979323846 * 100) << "%" << '\n';
     getch();
     cout << '\n' << "press again to confirm" << '\n';
     getch();
@@ -347,4 +342,20 @@ void area()
     getch();
     cout << '\n' << "press again to confirm" << '\n';
     getch();
+}
+
+void piSplit(long long int toToss)
+{
+    long long int hit = 0;
+    double x, y;
+
+    for (long long int i = 0; i < toToss; i++)
+    {
+        x = (double)rand() / RAND_MAX;
+        y = (double)rand() / RAND_MAX;
+        if (x * x + y * y <= 1.0)
+            hit++;
+    }
+    
+
 }
