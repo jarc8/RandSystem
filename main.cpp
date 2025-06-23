@@ -7,9 +7,12 @@
 #include <iomanip>
 #include <thread>
 #include <vector>
+#include <mutex>
 using namespace std;
 
 long long int piHits = 0;
+mutex piMutex;
+
 
 class symNumber//I dont know if symbolic number exists in c++ so I made my own
 {
@@ -272,17 +275,24 @@ void throwDie()
 
 void pi()
 {
-    piHits = 0;
     long long int totalTosses;
     cout << "insert number of tries: ";
     cin >> totalTosses;
     int threads;
-    cout << "insert the number of threads to use(at your own risk):";
+    cout << "insert the number of threads to use(at your own risk): ";
     cin >> threads;
 
     vector<thread> threadPool;
 
+    for (int i = 0; i < threads; i++)
+    {
+        threadPool.push_back(thread(piSplit, totalTosses / threads));
+    }
 
+    for (auto &t : threadPool)
+    {
+        t.join();
+    }
 
     cout << "out of " << totalTosses << " tries, " << piHits << " were inside the quarter of the circle" << '\n';
     cout << fixed << setprecision(15);
@@ -357,5 +367,6 @@ void piSplit(long long int toToss)
             hit++;
     }
     
-
+    lock_guard<mutex> lock(piMutex);
+    piHits += hit;
 }
