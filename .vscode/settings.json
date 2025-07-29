@@ -44,6 +44,22 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "thread": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "bit": "cpp",
+        "charconv": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "condition_variable": "cpp",
+        "optional": "cpp",
+        "string_view": "cpp",
+        "format": "cpp",
+        "mutex": "cpp",
+        "numbers": "cpp",
+        "ranges": "cpp",
+        "semaphore": "cpp",
+        "span": "cpp",
+        "stop_token": "cpp",
+        "text_encoding": "cpp",
+        "variant": "cpp"
     }
 }
