@@ -1,13 +1,11 @@
 #include <iostream>
-#include <conio.h>
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
-#include <windows.h>
 #include <iomanip>
 using namespace std;
 
-class symNumber//I dont know if symbolic number exists in c++ so I made my own
+class symNumber//recreating int for better qol
 {
     public: 
         float number;
@@ -105,7 +103,7 @@ class symNumber//I dont know if symbolic number exists in c++ so I made my own
             if (number < 0)
             {
                 cout << "Error: Cannot compute square root of a negative number!" << '\n';
-                return 0; // Return zero or handle error as needed
+                return 0; //return zero just to prevent annoying crashes, should handle the error
             }
             return std::sqrt(number);
         }
@@ -199,7 +197,12 @@ int main()
 
 bool menu()
 {
-    system("cls");
+    #ifdef __linux__
+        system("clear");
+    #else
+        system("cls");
+    #endif
+    
     cout <<"Welcome to RandSystem" << '\n';
     cout << "select an option using nums" << '\n';
     cout << "1-throw a die" << '\n';
@@ -208,20 +211,32 @@ bool menu()
     cout << "4-exit" << '\n';
     cout << "select an option using nums: ";
 
-    switch (getch())
+    switch (cin.get())
     {
         case '1':
-            system("cls");
+            #ifdef __linux__
+                system("clear");
+            #else
+                system("cls");
+            #endif
             throwDie();
             break;
 
         case '2':
-            system("cls");
+            #ifdef __linux__
+                system("clear");
+            #else
+                system("cls");
+            #endif
             pi();
             break;
 
         case '3':
-            system("cls");
+            #ifdef __linux__
+                system("clear");
+            #else
+                system("cls");
+            #endif
             area();
             break;
 
@@ -260,9 +275,9 @@ void throwDie()
     for (int i = 0; i < sizeof(results) / sizeof(int); i++)
         cout << "the number " << setw(10) << i + n - 1 << setw(15) << " appeared " << setw(10) << results[i] << setw(10) <<" times" << '\n'; 
     
-    getch();
-    cout << '\n' << "press again to confirm" << '\n';
-    getch();
+    cin.get();
+    cout << '\n' << "press any key to exit" << '\n';
+    cin.get();
 }
 
 void pi()
@@ -292,9 +307,9 @@ void pi()
     cout << "the approximation of pi is: " << 4*(double)hit/toToss << '\n';
     cout << "the error is: " << abs(3.14159265358979323846 - 4*(double)hit/toToss) << '\n';
     cout << "the error in percent is: " << abs((3.14159265358979323846 - 4*(double)hit/toToss) / 3.14159265358979323846 * 100) << "%" << '\n';
-    getch();
-    cout << '\n' << "press again to confirm" << '\n';
-    getch();
+    cin.get();
+    cout << '\n' << "press any key to exit" << '\n';
+    cin.get();
 }
 
 void area()
@@ -342,7 +357,7 @@ void area()
 
     cout << "out of " << toTry << " tries, " << hit << " were inside the area" << '\n';
     cout << "the approximation of the area is: " << (maxX.number - minX.number) * (maxY.number - minY.number) * (double)hit/tries << '\n';
-    getch();
-    cout << '\n' << "press again to confirm" << '\n';
-    getch();
+    cin.get();
+    cout << '\n' << "press any key to exit" << '\n';
+    cin.get();
 }
